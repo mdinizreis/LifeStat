@@ -7,13 +7,20 @@ import { Link, useNavigate } from "react-router-dom";
 
 // importing icons from MUI Icons
 import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
-import DirectionsRunOutlinedIcon from "@mui/icons-material/DirectionsRunOutlined";
+
 import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined";
 import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
 import MemoryOutlinedIcon from "@mui/icons-material/MemoryOutlined";
 import AttractionsOutlinedIcon from "@mui/icons-material/AttractionsOutlined";
 import MenuOpenOutlinedIcon from "@mui/icons-material/MenuOpenOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+
+import TodayIcon from "@mui/icons-material/Today";
+import DateRangeIcon from "@mui/icons-material/DateRange";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import DirectionsRunOutlinedIcon from "@mui/icons-material/DirectionsRunOutlined";
+import HotelIcon from "@mui/icons-material/Hotel";
+import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
 // import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
 
 const SideBar = () => {
@@ -101,51 +108,61 @@ const SideBar = () => {
         ></MenuItem>
         {!collapsed && (
           <MenuItem>
-            <p className={styles.sidebar}>Top Articles</p>
+            <p className={styles.sidebar}>DASHBOARD</p>
           </MenuItem>
         )}
 
         <MenuItem
-          icon={<AttachMoneyOutlinedIcon />}
+          icon={<TodayIcon />}
           onClick={() => handleMenuItemClick("Finance")}
         >
           {" "}
-          Finance
+          Day
         </MenuItem>
         <MenuItem
-          icon={<DirectionsRunOutlinedIcon />}
+          icon={<DateRangeIcon />}
           onClick={() => handleMenuItemClick("Sports")}
         >
           {" "}
-          Sports
+          Week
         </MenuItem>
         <MenuItem
-          icon={<WorkOutlineOutlinedIcon />}
+          icon={<CalendarMonthIcon />}
           onClick={() => handleMenuItemClick("Business")}
         >
           {" "}
-          Business
+          Month
         </MenuItem>
+        {!collapsed && (
+          <MenuItem>
+            <p className={styles.sidebar}>REVIEW</p>
+          </MenuItem>
+        )}
+        {!collapsed && (
+          <MenuItem>
+            <p className={styles.sidebar}>DATA</p>
+          </MenuItem>
+        )}
         <MenuItem
-          icon={<AccountBalanceOutlinedIcon />}
+          icon={<DirectionsRunOutlinedIcon />}
           onClick={() => handleMenuItemClick("Politics")}
         >
           {" "}
-          Politics
+          Activity
         </MenuItem>
         <MenuItem
-          icon={<MemoryOutlinedIcon />}
+          icon={<HotelIcon />}
           onClick={() => handleMenuItemClick("Tech")}
         >
           {" "}
-          Tech
+          Sleep
         </MenuItem>
         <MenuItem
-          icon={<AttractionsOutlinedIcon />}
+          icon={<MonitorHeartIcon />}
           onClick={() => handleMenuItemClick("Entertainment")}
         >
           {" "}
-          Entertainment
+          Health & Body
         </MenuItem>
 
         <br />
