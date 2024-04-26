@@ -29,7 +29,8 @@ const Stippling = () => {
       const imageUrl = "https://i.imgur.com/eVFhxMk.jpg"; //marcos
       //   const imageUrl = "https://i.imgur.com/5ZbfBg0.jpg"; //amanda
       //   const imageUrl = "https://i.imgur.com/Lqp92n0.jpeg"; //senna
-      // const imageUrl = "https://ga-core.s3.amazonaws.com/production/uploads/instructor/image/26939/webp_thumbnail_desmond.png.webp"; //desmond
+      // const imageUrl =
+      //   "https://ga-core.s3.amazonaws.com/production/uploads/instructor/image/26939/webp_thumbnail_desmond.png.webp"; //desmond
 
       loadImage(imageUrl)
         .then((base64Image) => {

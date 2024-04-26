@@ -24,6 +24,8 @@
 ######################
 *.log
 *.sqlite
+*.sql
+*.pgerd
 
 # OS generated files #
 ######################
