@@ -6,11 +6,11 @@ const cors = require("cors");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 
-const users = require("./src/routers/users");
 const insightsReports = require("./src/routers/insightsReports");
 const dataSources = require("./src/routers/dataSources");
 const dataEntries = require("./src/routers/dataEntries");
 const dataCategories = require("./src/routers/dataCategories");
+const users = require("./src/routers/users");
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -19,7 +19,7 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
-connectDB();
+connectDB(); // Wait for database connection and model synchronization
 
 const app = express();
 app.use(cors());
@@ -28,11 +28,13 @@ app.use(limiter);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use("/", users);
+// Define routes after database connection is established
+
 app.use("/", insightsReports);
 app.use("/", dataSources);
 app.use("/", dataEntries);
 app.use("/", dataCategories);
+app.use("/", users);
 
 const PORT = process.env.PORT || 5002;
 app.listen(PORT, () => {

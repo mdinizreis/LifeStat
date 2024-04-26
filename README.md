@@ -35,3 +35,9 @@ BACKEND
 
 - `npm init - y`
 - `npm install dotenv express-validator jsonwebtoken bcrypt uuid cors helmet express-rate-limit`
+- `npm install sequelize`
+  PostgreSQL Client
+- `npm install pg`
+
+access token
+refresh token

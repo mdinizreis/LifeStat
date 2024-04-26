@@ -9,7 +9,7 @@ const sequelize = new Sequelize(process.env.DATABASE, {
 
 // Define the DataSource model
 const DataSources = sequelize.define(
-  "DataSources",
+  "data_sources",
   {
     source_id: {
       type: DataTypes.UUID,

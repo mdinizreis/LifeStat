@@ -1,4 +1,9 @@
 const { Sequelize } = require("sequelize");
+const { Users } = require("../models/Users");
+const { InsightsReports } = require("../models/InsightsReports");
+const { DataSources } = require("../models/DataSources");
+const { DataEntries } = require("../models/DataEntries");
+const { DataCategories } = require("../models/DataCategories");
 
 const connectDB = async () => {
   try {
@@ -9,7 +14,13 @@ const connectDB = async () => {
     await sequelize.authenticate();
     console.log("Database connected successfully");
 
-    await sequelize.sync(); // synchronize models
+    // synchronize all models
+    await Users.sync();
+    await InsightsReports.sync();
+    await DataSources.sync();
+    await DataEntries.sync();
+    await DataCategories.sync();
+
     console.log("Models synchonized successfully");
   } catch (error) {
     console.error("Unable to connect to the database:", error);

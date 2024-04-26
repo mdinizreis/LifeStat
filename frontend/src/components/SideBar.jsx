@@ -6,12 +6,11 @@ import styles from "./SideBar.module.css";
 import { Link, useNavigate } from "react-router-dom";
 
 // importing icons from MUI Icons
-import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
-
-import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined";
-import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
-import MemoryOutlinedIcon from "@mui/icons-material/MemoryOutlined";
-import AttractionsOutlinedIcon from "@mui/icons-material/AttractionsOutlined";
+// import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
+// import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined";
+// import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
+// import MemoryOutlinedIcon from "@mui/icons-material/MemoryOutlined";
+// import AttractionsOutlinedIcon from "@mui/icons-material/AttractionsOutlined";
 import MenuOpenOutlinedIcon from "@mui/icons-material/MenuOpenOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 

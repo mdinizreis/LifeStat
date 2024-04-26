@@ -9,7 +9,7 @@ const sequelize = new Sequelize(process.env.DATABASE, {
 
 // Define the DataCategory model
 const DataCategories = sequelize.define(
-  "DataCategories",
+  "data_categories",
   {
     category_id: {
       type: DataTypes.UUID,

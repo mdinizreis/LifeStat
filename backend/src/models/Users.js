@@ -9,7 +9,7 @@ const sequelize = new Sequelize(process.env.DATABASE, {
 
 // Define the User model
 const Users = sequelize.define(
-  "Users",
+  "users",
   {
     user_id: {
       type: DataTypes.UUID,
@@ -19,8 +19,8 @@ const Users = sequelize.define(
     user_username: DataTypes.STRING(20),
     user_email: DataTypes.TEXT,
     user_password: DataTypes.TEXT,
-    user_join_date: DataTypes.TIMESTAMP,
-    user_last_login: DataTypes.TIMESTAMP,
+    user_join_date: DataTypes.DATE,
+    user_last_login: DataTypes.DATE,
   },
   {
     tableName: "users", // Specify the table name

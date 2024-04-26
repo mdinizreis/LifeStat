@@ -12,14 +12,14 @@ const sequelize = new Sequelize(process.env.DATABASE, {
 
 // Define the DataEntry model
 const DataEntries = sequelize.define(
-  "DataEntries",
+  "data_entries",
   {
     entry_id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    data_timestamp: DataTypes.TIMESTAMP,
+    data_timestamp: DataTypes.DATE,
     data_value: DataTypes.JSONB,
     analysis_type: DataTypes.STRING(50),
   },
@@ -28,9 +28,9 @@ const DataEntries = sequelize.define(
   }
 );
 
-DataEntry.belongsTo(Users); // Define association
-DataEntry.belongsTo(DataSources); // Define association
-DataEntry.belongsTo(DataCategories); // Define association
+DataEntries.belongsTo(Users); // Define association
+DataEntries.belongsTo(DataSources); // Define association
+DataEntries.belongsTo(DataCategories); // Define association
 
 // Sync the model with the database
 sequelize

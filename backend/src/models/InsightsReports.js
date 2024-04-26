@@ -10,7 +10,7 @@ const sequelize = new Sequelize(process.env.DATABASE, {
 
 // Define the InsightsReports model
 const InsightsReports = sequelize.define(
-  "InsightsReports",
+  "insights_reports",
   {
     report_id: {
       type: DataTypes.UUID,
@@ -20,7 +20,7 @@ const InsightsReports = sequelize.define(
     report_name: DataTypes.STRING(50),
     report_type: DataTypes.STRING(50),
     analysis_results: DataTypes.STRING(100),
-    date_created: DataTypes.TIMESTAMP,
+    date_created: DataTypes.DATE,
   },
   {
     tableName: "insights_reports", // Specify the table name
