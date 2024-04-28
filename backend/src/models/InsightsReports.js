@@ -5,6 +5,7 @@ const { Users } = require("./Users");
 const sequelize = new Sequelize(process.env.DATABASE, {
   define: {
     underscored: true,
+    timestamps: false, //so it does not automatically creates the columns created_at and updated_at
   },
 });
 
@@ -24,6 +25,11 @@ const InsightsReports = sequelize.define(
   },
   {
     tableName: "insights_reports", // Specify the table name
+    hooks: {
+      beforeCreate: (insightsReport, options) => {
+        insightsReport.date_created = new Date(); // Set date_created to current date
+      },
+    },
   }
 );
 

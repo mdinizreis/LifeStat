@@ -1,14 +1,33 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import styles from "./NavBar.module.css";
 import { NavLink, useNavigate } from "react-router-dom";
+import UserContext from "../context/user";
 
 // importing icons from MUI Icons
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
-// import Login from "./Login";
+import Login from "./Login";
 
 const NavBar = () => {
-  const handleLogout = () => {};
+  const [openLoginModal, setOpenLoginModal] = useState(false);
+  const navigate = useNavigate();
+  const userCtx = useContext(UserContext);
+
+  const handleOpenLoginModal = () => {
+    setOpenLoginModal(true);
+  };
+
+  const handleCloseLoginModal = () => {
+    setOpenLoginModal(false);
+  };
+
+  const handleLogout = () => {
+    // Clear user context or any stored tokens or session data
+    userCtx.setAccessToken(null);
+    // userCtx.setRole(null);
+    // userCtx.setLoggedUserId(null);
+    navigate("/Main");
+  };
 
   return (
     <header className={styles.navbar}>
@@ -35,10 +54,10 @@ const NavBar = () => {
               marginRight: "2rem",
             }}
           >
-            {/* {!userCtx.accessToken ? (
+            {!userCtx.accessToken ? (
               <button
-              // className={styles.loginButton}
-              // onClick={handleOpenLoginModal}
+                className={styles.loginButton}
+                onClick={handleOpenLoginModal}
               >
                 Login <LockOpenOutlinedIcon />
               </button>
@@ -46,12 +65,12 @@ const NavBar = () => {
               <button className={styles.logoutButton} onClick={handleLogout}>
                 Logout <ExitToAppOutlinedIcon />
               </button>
-            )} */}
+            )}
           </li>
         </ul>
       </nav>
       {/*========== Render the Login component conditionally ==========*/}
-      {/* {openLoginModal && <Login handleClose={handleCloseLoginModal} />} */}
+      {openLoginModal && <Login handleClose={handleCloseLoginModal} />}
     </header>
   );
 };

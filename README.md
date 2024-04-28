@@ -25,6 +25,12 @@ FRONTEND
 - Install Observable standard library
   `npm i @observablehq/stdlib`
 
+- Install Material UI
+  `npm install @material-ui/core`
+
+- Install jwt-decode
+  `npm i jwt-decode`
+
 - using for oura fetch
   CORS PROXY
   https://cors-anywhere.herokuapp.com/corsdemo

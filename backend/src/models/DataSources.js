@@ -4,6 +4,7 @@ const { Sequelize, DataTypes } = require("sequelize");
 const sequelize = new Sequelize(process.env.DATABASE, {
   define: {
     underscored: true,
+    timestamps: false, //so it does not automatically creates the columns created_at and updated_at
   },
 });
 

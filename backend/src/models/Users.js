@@ -4,6 +4,7 @@ const { Sequelize, DataTypes } = require("sequelize");
 const sequelize = new Sequelize(process.env.DATABASE, {
   define: {
     underscored: true,
+    timestamps: false, //so it does not automatically creates the columns created_at and updated_at
   },
 });
 
@@ -18,12 +19,17 @@ const Users = sequelize.define(
     },
     user_username: DataTypes.STRING(20),
     user_email: DataTypes.TEXT,
-    user_password: DataTypes.TEXT,
+    user_hash: DataTypes.STRING(64), // Assuming SHA-256 hash (64 characters)
     user_join_date: DataTypes.DATE,
     user_last_login: DataTypes.DATE,
   },
   {
     tableName: "users", // Specify the table name
+    hooks: {
+      beforeCreate: (user, options) => {
+        user.user_join_date = new Date(); // Set user_join_date to current date
+      },
+    },
   }
 );
 
