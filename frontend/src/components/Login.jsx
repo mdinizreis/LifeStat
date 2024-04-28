@@ -37,8 +37,7 @@ const Login = ({ handleClose }) => {
 
   //for registration
   const [roles, setRoles] = useState([]);
-  const [registrationFirstName, setRegistrationFirstName] = useState("");
-  const [registrationLastName, setRegistrationLastName] = useState("");
+  const [registrationUsername, setRegistrationUsername] = useState("");
   const [registrationEmail, setRegistrationEmail] = useState("");
   const [registrationPassword, setRegistrationPassword] = useState("");
   const [registrationRole, setRegistrationRole] = useState(
@@ -61,16 +60,14 @@ const Login = ({ handleClose }) => {
   //user registration
   const registerUser = async () => {
     const res = await fetchData("/auth/register", "PUT", {
-      firstName: registrationFirstName,
-      lastName: registrationLastName,
-      email: registrationEmail,
-      password: registrationPassword,
+      user_username: registrationUsername,
+      user_email: registrationEmail,
+      user_hash: registrationPassword,
       role: registrationRole,
     });
 
     if (res.ok) {
       setRegistrationFirstName("");
-      setRegistrationLastName("");
       setRegistrationEmail("");
       setRegistrationPassword("");
       setRegistrationRole("66100b626d6defdb0da425bf");
@@ -221,15 +218,15 @@ const Login = ({ handleClose }) => {
                   <Grid container spacing={2}>
                     <Grid item xs={12}>
                       <TextField
-                        autoComplete="given-name"
-                        name="firstName"
+                        autoComplete="username"
+                        name="username"
                         required
                         fullWidth
-                        id="firstName"
-                        label="First Name"
+                        id="username"
+                        label="Username"
                         autoFocus
                         onChange={(e) =>
-                          setRegistrationFirstName(e.target.value)
+                          setRegistrationUsername(e.target.value)
                         }
                       />
                     </Grid>

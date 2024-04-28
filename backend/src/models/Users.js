@@ -17,9 +17,18 @@ const Users = sequelize.define(
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    user_username: DataTypes.STRING(20),
-    user_email: DataTypes.TEXT,
-    user_hash: DataTypes.STRING(64), // Assuming SHA-256 hash (64 characters)
+    user_username: {
+      type: DataTypes.STRING(20),
+      allowNull: false,
+    },
+    user_email: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    user_hash: {
+      type: DataTypes.STRING(64), // All the way to allow SHA-256 hash (64 characters)
+      allowNull: false,
+    },
     user_join_date: DataTypes.DATE,
     user_last_login: DataTypes.DATE,
   },
