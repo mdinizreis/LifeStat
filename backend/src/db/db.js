@@ -14,12 +14,12 @@ const connectDB = async () => {
     await sequelize.authenticate();
     console.log("Database connected successfully");
 
-    // synchronize all models
+    // synchronize all models - need to sync in order, depending on tables relationships (tables with FK need to be imported after the tables they relate to)
     await Users.sync();
-    await InsightsReports.sync();
-    await DataSources.sync();
-    await DataEntries.sync();
     await DataCategories.sync();
+    await DataSources.sync();
+    await InsightsReports.sync();
+    await DataEntries.sync();
 
     console.log("Models synchonized successfully");
   } catch (error) {

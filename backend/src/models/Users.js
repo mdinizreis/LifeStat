@@ -29,6 +29,11 @@ const Users = sequelize.define(
       type: DataTypes.STRING(64), // All the way to allow SHA-256 hash (64 characters)
       allowNull: false,
     },
+    user_role: {
+      type: DataTypes.STRING(20),
+      defaultValue: "user", // Default value is "user"
+    },
+
     user_join_date: DataTypes.DATE,
     user_last_login: DataTypes.DATE,
   },
@@ -41,15 +46,5 @@ const Users = sequelize.define(
     },
   }
 );
-
-// Sync the model with the database
-sequelize
-  .sync()
-  .then(() => {
-    console.log("Model Users synced successfully");
-  })
-  .catch((err) => {
-    console.error("Error syncing Users model:", err);
-  });
 
 module.exports = { Users };

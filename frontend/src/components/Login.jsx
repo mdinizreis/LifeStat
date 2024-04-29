@@ -41,36 +41,36 @@ const Login = ({ handleClose }) => {
   const [registrationEmail, setRegistrationEmail] = useState("");
   const [registrationPassword, setRegistrationPassword] = useState("");
   const [registrationRole, setRegistrationRole] = useState(
-    "66100b626d6defdb0da425bf" //user role
-  ); //its expecting the objectID and not the user or admin...
+    "user" //user role
+  );
 
   //to control if Login or Registration screen show at the Modal
   const [showLogin, setShowLogin] = useState(true);
 
   //   get user roles (user, admin, etc)
-  const getRoles = async () => {
-    const res = await fetchData("/roles");
-    if (res.ok) {
-      setRoles(res.data);
-    } else {
-      console.log(res.data);
-    }
-  };
+  //   const getRoles = async () => {
+  //     const res = await fetchData("/roles");
+  //     if (res.ok) {
+  //       setRoles(res.data);
+  //     } else {
+  //       console.log(res.data);
+  //     }
+  //   };
 
   //user registration
   const registerUser = async () => {
-    const res = await fetchData("/auth/register", "PUT", {
+    const res = await fetchData("/register", "PUT", {
       user_username: registrationUsername,
       user_email: registrationEmail,
       user_hash: registrationPassword,
-      role: registrationRole,
+      user_role: registrationRole,
     });
 
     if (res.ok) {
-      setRegistrationFirstName("");
+      setRegistrationUsername("");
       setRegistrationEmail("");
       setRegistrationPassword("");
-      setRegistrationRole("66100b626d6defdb0da425bf");
+      setRegistrationRole("user");
       alert("Registered!");
       setShowLogin("true");
     } else {
@@ -80,16 +80,16 @@ const Login = ({ handleClose }) => {
 
   //user login
   const loginUser = async () => {
-    const res = await fetchData("/auth/login", "POST", {
-      email: loginEmail,
-      password: loginPassword,
+    const res = await fetchData("/login", "POST", {
+      user_email: loginEmail,
+      user_hash: loginPassword,
     });
 
     if (res.ok) {
       userCtx.setAccessToken(res.data.access);
       userCtx.setLoggedUserId(res.data.id);
       const decoded = jwtDecode(res.data.access); //decode to get claims
-      userCtx.setRole(decoded.role); //get role from claims
+      userCtx.setRole(decoded.user_role); //get role from claims
       handleClose(); //to close the modal after successful login
     } else {
       alert(JSON.stringify(res.data));
@@ -100,15 +100,27 @@ const Login = ({ handleClose }) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     if (showLogin) {
+      if (!loginEmail || !loginPassword) {
+        alert("Please enter both email and password.");
+        return;
+      }
       loginUser(); //if login call the login endpoint
     } else if (!showLogin) {
+      if (
+        !registrationUsername ||
+        !registrationEmail ||
+        !registrationPassword
+      ) {
+        alert("Please fill out all registration fields.");
+        return;
+      }
       registerUser(); //if registration is truthy call the registration endpoint
     }
   };
 
-  useEffect(() => {
-    getRoles();
-  }, []);
+  //   useEffect(() => {
+  //     getRoles();
+  //   }, []);
 
   return (
     <div>
@@ -178,9 +190,9 @@ const Login = ({ handleClose }) => {
                       margin="normal"
                       required
                       fullWidth
-                      id="email"
+                      id="loginEmail"
                       label="Email Address"
-                      name="email"
+                      name="loginEmail"
                       autoComplete="email"
                       autoFocus
                       onChange={(e) => setLoginEmail(e.target.value)}
@@ -189,10 +201,10 @@ const Login = ({ handleClose }) => {
                       margin="normal"
                       required
                       fullWidth
-                      name="password"
+                      name="loginPassword"
                       label="Password"
                       type="password"
-                      id="password"
+                      id="loginPassword"
                       autoComplete="current-password"
                       onChange={(e) => setLoginPassword(e.target.value)}
                     />
@@ -216,13 +228,13 @@ const Login = ({ handleClose }) => {
                 ) : (
                   /*========================  REGISTRATION SCREEN ======================== */
                   <Grid container spacing={2}>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sm={12}>
                       <TextField
                         autoComplete="username"
-                        name="username"
+                        name="registrationUsername"
                         required
                         fullWidth
-                        id="username"
+                        id="registrationUsername"
                         label="Username"
                         autoFocus
                         onChange={(e) =>
@@ -235,9 +247,9 @@ const Login = ({ handleClose }) => {
                       <TextField
                         required
                         fullWidth
-                        id="email"
+                        id="registrationEmail"
                         label="Email Address"
-                        name="email"
+                        name="registrationEmail"
                         autoComplete="email"
                         onChange={(e) => setRegistrationEmail(e.target.value)}
                       />
@@ -246,10 +258,10 @@ const Login = ({ handleClose }) => {
                       <TextField
                         required
                         fullWidth
-                        name="password"
+                        name="registrationPassword"
                         label="Password"
                         type="password"
-                        id="password"
+                        id="registrationPassword"
                         autoComplete="new-password"
                         onChange={(e) =>
                           setRegistrationPassword(e.target.value)

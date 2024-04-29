@@ -24,14 +24,4 @@ const DataCategories = sequelize.define(
   }
 );
 
-// Sync the model with the database
-sequelize
-  .sync()
-  .then(() => {
-    console.log("Model DataCategories synced successfully");
-  })
-  .catch((err) => {
-    console.error("Error syncing DataCategories model:", err);
-  });
-
 module.exports = { DataCategories };

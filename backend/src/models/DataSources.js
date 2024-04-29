@@ -27,14 +27,4 @@ const DataSources = sequelize.define(
   }
 );
 
-// Sync the model with the database
-sequelize
-  .sync()
-  .then(() => {
-    console.log("Model DataSources synced successfully");
-  })
-  .catch((err) => {
-    console.error("Error syncing DataSources model:", err);
-  });
-
 module.exports = { DataSources };

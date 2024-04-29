@@ -25,7 +25,7 @@ const NavBar = () => {
     // Clear user context or any stored tokens or session data
     userCtx.setAccessToken(null);
     // userCtx.setRole(null);
-    // userCtx.setLoggedUserId(null);
+    userCtx.setLoggedUserId(null);
     navigate("/Main");
   };
 

@@ -35,14 +35,4 @@ const InsightsReports = sequelize.define(
 
 InsightsReports.belongsTo(Users); // Define association
 
-// Sync the model with the database
-sequelize
-  .sync()
-  .then(() => {
-    console.log("Model InsightsReports synced successfully");
-  })
-  .catch((err) => {
-    console.error("Error syncing InsightsReports model:", err);
-  });
-
 module.exports = { InsightsReports };

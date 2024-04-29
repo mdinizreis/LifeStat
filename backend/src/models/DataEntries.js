@@ -38,14 +38,4 @@ DataEntries.belongsTo(Users); // Define association
 DataEntries.belongsTo(DataSources); // Define association
 DataEntries.belongsTo(DataCategories); // Define association
 
-// Sync the model with the database
-sequelize
-  .sync()
-  .then(() => {
-    console.log("Model DataEntries synced successfully");
-  })
-  .catch((err) => {
-    console.error("Error syncing DataEntries model:", err);
-  });
-
 module.exports = { DataEntries };

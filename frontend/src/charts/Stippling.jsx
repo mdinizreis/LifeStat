@@ -35,7 +35,7 @@ const Stippling = () => {
       loadImage(imageUrl)
         .then((base64Image) => {
           // Image loaded successfully, can now use the Base64-encoded image
-          console.log("Image loaded:", base64Image);
+          // console.log("Image loaded:", base64Image);
 
           const image = new Image();
           image.src = base64Image;
@@ -161,7 +161,7 @@ const Stippling = () => {
       };
     `;
     const blob = new Blob([scriptContent], { type: "text/javascript" });
-    console.log(blob);
+    // console.log(blob);
     return URL.createObjectURL(blob);
   };
 

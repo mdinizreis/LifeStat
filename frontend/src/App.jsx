@@ -8,8 +8,8 @@ import UserContext from "./context/user";
 
 function App() {
   const [accessToken, setAccessToken] = useState("");
-  // const [role, setRole] = useState("");
-  // const [loggedUserId, setLoggedUserId] = useState("");
+  const [role, setRole] = useState("");
+  const [loggedUserId, setLoggedUserId] = useState("");
 
   return (
     <>
@@ -17,6 +17,10 @@ function App() {
         value={{
           accessToken,
           setAccessToken,
+          role,
+          setRole,
+          loggedUserId,
+          setLoggedUserId,
         }}
       >
         <Suspense fallback={<h1>loading...</h1>}>
