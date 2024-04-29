@@ -1,4 +1,4 @@
-//Algorithm Credit voronoi Stipling: https://observablehq.com/d/2b4663a35eca248f
+//Algorithm Credit voronoi Stipling: https://observablehq.com/@mbostock/voronoi-stippling
 
 import React, { useEffect, useRef } from "react";
 // import * as d3 from "d3";

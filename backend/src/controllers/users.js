@@ -120,8 +120,11 @@ const login = async (req, res) => {
       id: user.user_id,
       email: user.user_email,
       role: user.user_role,
+      username: user.user_username,
     };
-    console.log(claims);
+
+    // console.log(claims);
+
     const access = jwt.sign(claims, process.env.ACCESS_SECRET, {
       expiresIn: "20m",
       jwtid: uuidv4(),
@@ -131,7 +134,13 @@ const login = async (req, res) => {
       expiresIn: "30d",
       jwtid: uuidv4(),
     });
-    res.json({ access, refresh, id: user.user_id });
+    res.json({
+      access,
+      refresh,
+      id: user.user_id,
+      role: user.user_role,
+      username: user.user_username,
+    });
   } catch (error) {
     console.error(error.message);
     res.status(400).json({ status: "error", msg: "error logging in" });
@@ -168,7 +177,7 @@ const refresh = async (req, res) => {
   }
 };
 
-const update = async (req, res) => {
+const updateUser = async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.user_hash, 12);
 
@@ -192,6 +201,27 @@ const update = async (req, res) => {
   }
 };
 
+const deleteUser = async (req, res) => {
+  try {
+    const user_id = await Users.findByPk(req.params.user_id);
+
+    if (!user_id) {
+      return res.status(404).json({ status: "error", msg: "User not found" });
+    }
+
+    await Users.destroy({
+      where: {
+        user_id: req.params.user_id,
+      },
+    });
+
+    res.json({ status: "ok", msg: "User deleted successfully" });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ status: "error", msg: "Failed to delete user" });
+  }
+};
+
 const getAllUsers = async (req, res) => {
   try {
     const allUsers = await Users.findAll({
@@ -212,4 +242,38 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-module.exports = { getAllUsers, seedUsers, register, login, refresh, update };
+const getUserInfo = async (req, res) => {
+  const user_id = req.params.user_id;
+
+  try {
+    // Find the user by ID
+    const user = await Users.findByPk(user_id);
+
+    if (!user) {
+      // If user with the specified ID is not found, return a 404 Not Found response
+      return res
+        .status(404)
+        .json({ status: "error", message: "User not found" });
+    }
+
+    // If user is found, return the user data
+    return res.status(200).json({ status: "success", data: user });
+  } catch (error) {
+    // If an error occurs, return a 500 Internal Server Error response
+    console.error(error);
+    return res
+      .status(500)
+      .json({ status: "error", message: "Internal Server Error" });
+  }
+};
+
+module.exports = {
+  getAllUsers,
+  seedUsers,
+  register,
+  login,
+  refresh,
+  updateUser,
+  getUserInfo,
+  deleteUser,
+};

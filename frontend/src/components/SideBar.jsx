@@ -1,33 +1,30 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import styles from "./SideBar.module.css";
-// import UserContext from "../context/user";
+import UserContext from "../context/user";
 // import useFetch from "../hooks/useFetch";
 import { Link, useNavigate } from "react-router-dom";
 
 // importing icons from MUI Icons
-// import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
-// import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined";
-// import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
-// import MemoryOutlinedIcon from "@mui/icons-material/MemoryOutlined";
-// import AttractionsOutlinedIcon from "@mui/icons-material/AttractionsOutlined";
 import MenuOpenOutlinedIcon from "@mui/icons-material/MenuOpenOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-
 import TodayIcon from "@mui/icons-material/Today";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import DirectionsRunOutlinedIcon from "@mui/icons-material/DirectionsRunOutlined";
 import HotelIcon from "@mui/icons-material/Hotel";
 import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
-// import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 
 const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
-  // const userCtx = useContext(UserContext);
+  const userCtx = useContext(UserContext);
+
   // const fetchData = useFetch();
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   //   useEffect(() => {
   //     getCollectionByUserID();
@@ -37,59 +34,67 @@ const SideBar = () => {
     setCollapsed(!collapsed);
   };
 
-  //   const handleMenuItemClick = (menuItem) => {
-  //     let searchParams = {};
+  const handleMenuItemClick = (menuItem) => {
+    let searchParams = {};
 
-  //     switch (menuItem) {
-  //       case "Finance":
-  //         searchParams = {
-  //           q: "Finance",
-  //           category: "Finance",
-  //         };
-  //         break;
-  //       case "Sports":
-  //         searchParams = {
-  //           q: "Sports",
-  //           category: "Sports",
-  //         };
-  //         break;
-  //       case "Business":
-  //         searchParams = {
-  //           q: "Business",
-  //           category: "Business",
-  //         };
-  //         break;
-  //       case "Politics":
-  //         searchParams = {
-  //           q: "Politics",
-  //           category: "Politics",
-  //         };
-  //         break;
-  //       case "Tech":
-  //         searchParams = {
-  //           q: "Tech",
-  //           category: "Tech",
-  //         };
-  //         break;
-  //       case "Entertainment":
-  //         searchParams = {
-  //           q: "Entertainment",
-  //           category: "Entertainment",
-  //         };
-  //         break;
-  //     }
-  //     // Pass the search parameters state to the Main page
-  //     navigate("/Main", { state: { searchParams } });
-  //   };
+    switch (menuItem) {
+      case "day":
+        searchParams = {
+          q: "Day",
+          category: "Day",
+        };
+        break;
+      case "week":
+        searchParams = {
+          q: "Week",
+          category: "Week",
+        };
+        break;
+      case "month":
+        searchParams = {
+          q: "Month",
+          category: "Month",
+        };
+        break;
+      case "activity":
+        searchParams = {
+          q: "Activity",
+          category: "Activity",
+        };
+        break;
+      case "sleep":
+        searchParams = {
+          q: "Sleep",
+          category: "Sleep",
+        };
+        break;
+      case "health":
+        searchParams = {
+          q: "Health & Body",
+          category: "Health & Body",
+        };
+        break;
+      case "account":
+        navigate("/account");
+        break;
+      case "connected":
+        searchParams = {
+          q: "Connected Services",
+          category: "Connected Services",
+        };
+        break;
+      default:
+        // Handle default case
+        break;
+    }
 
-  //   const handleFeedMenuItemClick = (feedMenuItem) => {
-  //     let searchParams = {};
-  //     searchParams = {
-  //       q: feedMenuItem,
-  //     };
-  //     // Pass the search parameters state to the Main page
-  //     navigate("/Feed", { state: { searchParams } });
-  //   };
+    // Pass the search parameters state to the Main page
+    // navigate("/Main", { state: { searchParams } });
+  };
+
+  const handleAdminMenuItemClick = () => {
+    navigate("/admin");
+  };
 
   return (
     <Sidebar
@@ -98,7 +103,6 @@ const SideBar = () => {
       onToggle={toggleSidebar}
     >
       <Menu>
-        {/* <img src="/src/assets/lifeStat_logo.png"></img> */}
         <MenuItem
           icon={collapsed ? <MenuOutlinedIcon /> : <MenuOpenOutlinedIcon />}
           onClick={() => {
@@ -113,21 +117,21 @@ const SideBar = () => {
 
         <MenuItem
           icon={<TodayIcon />}
-          onClick={() => handleMenuItemClick("Finance")}
+          onClick={() => handleMenuItemClick("day")}
         >
           {" "}
           Day
         </MenuItem>
         <MenuItem
           icon={<DateRangeIcon />}
-          onClick={() => handleMenuItemClick("Sports")}
+          onClick={() => handleMenuItemClick("week")}
         >
           {" "}
           Week
         </MenuItem>
         <MenuItem
           icon={<CalendarMonthIcon />}
-          onClick={() => handleMenuItemClick("Business")}
+          onClick={() => handleMenuItemClick("month")}
         >
           {" "}
           Month
@@ -144,26 +148,59 @@ const SideBar = () => {
         )}
         <MenuItem
           icon={<DirectionsRunOutlinedIcon />}
-          onClick={() => handleMenuItemClick("Politics")}
+          onClick={() => handleMenuItemClick("activity")}
         >
           {" "}
           Activity
         </MenuItem>
         <MenuItem
           icon={<HotelIcon />}
-          onClick={() => handleMenuItemClick("Tech")}
+          onClick={() => handleMenuItemClick("sleep")}
         >
           {" "}
           Sleep
         </MenuItem>
         <MenuItem
           icon={<MonitorHeartIcon />}
-          onClick={() => handleMenuItemClick("Entertainment")}
+          onClick={() => handleMenuItemClick("health")}
         >
           {" "}
           Health & Body
         </MenuItem>
+        {!collapsed && (
+          <MenuItem>
+            <p className={styles.sidebar}>{userCtx.userUsername}</p>
+          </MenuItem>
+        )}
+        <MenuItem
+          icon={<ManageAccountsIcon />}
+          onClick={() => handleMenuItemClick("account")}
+        >
+          {" "}
+          Account
+        </MenuItem>
+        <MenuItem
+          icon={<AddCircleOutlineIcon />}
+          onClick={() => handleMenuItemClick("connected")}
+        >
+          {" "}
+          Connected Services
+        </MenuItem>
 
+        {!collapsed && userCtx.userRole === "admin" && (
+          <MenuItem>
+            <p className={styles.sidebar}>Admin Stuff</p>
+          </MenuItem>
+        )}
+        {userCtx.userRole === "admin" && (
+          <MenuItem
+            icon={<AdminPanelSettingsIcon />}
+            onClick={() => handleAdminMenuItemClick()}
+          >
+            {" "}
+            Manage Users
+          </MenuItem>
+        )}
         <br />
       </Menu>
     </Sidebar>

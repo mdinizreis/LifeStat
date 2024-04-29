@@ -7,6 +7,7 @@ import UserContext from "../context/user";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
 import Login from "./Login";
+import { left } from "@popperjs/core";
 
 const NavBar = () => {
   const [openLoginModal, setOpenLoginModal] = useState(false);
@@ -24,7 +25,8 @@ const NavBar = () => {
   const handleLogout = () => {
     // Clear user context or any stored tokens or session data
     userCtx.setAccessToken(null);
-    // userCtx.setRole(null);
+    userCtx.setUserUsername(null);
+    userCtx.setUserRole(null);
     userCtx.setLoggedUserId(null);
     navigate("/Main");
   };
@@ -47,6 +49,10 @@ const NavBar = () => {
                 alt=""
               ></img>
             </NavLink>
+          </li>
+          <li className={styles.aboutLink}>
+            {/* Add NavLink for the "About" page */}
+            <NavLink to="/about">About</NavLink>
           </li>
           <li
             style={{

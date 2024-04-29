@@ -4,11 +4,14 @@ const Main = React.lazy(() => import("./pages/Main"));
 const NotFound = React.lazy(() => import("./pages/NoFound"));
 import Layout from "./components/Layout";
 import UserContext from "./context/user";
-// import Feed from "./pages/Feed";
+import Account from "./pages/Account";
+import Admin from "./pages/Admin";
+import About from "./pages/About";
 
 function App() {
   const [accessToken, setAccessToken] = useState("");
-  const [role, setRole] = useState("");
+  const [userUsername, setUserUsername] = useState("");
+  const [userRole, setUserRole] = useState("");
   const [loggedUserId, setLoggedUserId] = useState("");
 
   return (
@@ -17,8 +20,10 @@ function App() {
         value={{
           accessToken,
           setAccessToken,
-          role,
-          setRole,
+          userUsername,
+          setUserUsername,
+          userRole,
+          setUserRole,
           loggedUserId,
           setLoggedUserId,
         }}
@@ -28,7 +33,9 @@ function App() {
             <Routes>
               <Route path="/" element={<Navigate replace to="/main" />} />
               <Route path="main" element={<Main />} />
-              {/* <Route path="feed" element={<Feed />} /> */}
+              <Route path="account" element={<Account />} />
+              <Route path="admin" element={<Admin />} />
+              <Route path="about" element={<About />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Layout>

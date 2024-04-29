@@ -36,7 +36,7 @@ const Login = ({ handleClose }) => {
   const [loginPassword, setLoginPassword] = useState("");
 
   //for registration
-  const [roles, setRoles] = useState([]);
+  //   const [roles, setRoles] = useState([]);
   const [registrationUsername, setRegistrationUsername] = useState("");
   const [registrationEmail, setRegistrationEmail] = useState("");
   const [registrationPassword, setRegistrationPassword] = useState("");
@@ -88,8 +88,10 @@ const Login = ({ handleClose }) => {
     if (res.ok) {
       userCtx.setAccessToken(res.data.access);
       userCtx.setLoggedUserId(res.data.id);
+      userCtx.setUserUsername(res.data.username);
+      userCtx.setUserRole(res.data.role);
       const decoded = jwtDecode(res.data.access); //decode to get claims
-      userCtx.setRole(decoded.user_role); //get role from claims
+      //   userCtx.setRole(decoded.user_role); //get role from claims
       handleClose(); //to close the modal after successful login
     } else {
       alert(JSON.stringify(res.data));
@@ -117,10 +119,6 @@ const Login = ({ handleClose }) => {
       registerUser(); //if registration is truthy call the registration endpoint
     }
   };
-
-  //   useEffect(() => {
-  //     getRoles();
-  //   }, []);
 
   return (
     <div>
