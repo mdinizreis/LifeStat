@@ -13,10 +13,10 @@ const dataCategories = require("./src/routers/dataCategories");
 const users = require("./src/routers/users");
 
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
-  standardHeaders: true,
-  legacyHeaders: false,
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 3000, // Maximum number of requests per windowMs //original value was 100
+  standardHeaders: true, // Use standard response headers
+  legacyHeaders: false, // Do not use legacy response headers
 });
 
 connectDB(); // Wait for database connection and model synchronization

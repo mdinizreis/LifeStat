@@ -20,14 +20,14 @@ const InsightsReports = sequelize.define(
     },
     report_name: DataTypes.STRING(50),
     report_type: DataTypes.STRING(50),
-    analysis_results: DataTypes.STRING(100),
-    date_created: DataTypes.DATE,
+    report_analysis_results: DataTypes.STRING(100),
+    report_date_created: DataTypes.DATE,
   },
   {
     tableName: "insights_reports", // Specify the table name
     hooks: {
       beforeCreate: (insightsReport, options) => {
-        insightsReport.date_created = new Date(); // Set date_created to current date
+        insightsReport.report_date_created = new Date(); // Set date_created to current date
       },
     },
   }

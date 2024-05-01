@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import useGetOura from "../hooks/useGetOura";
+import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 
 const DisplaySleep = () => {
   const { ouraData } = useGetOura();
   const [ouraSleepData, setOuraSleepData] = useState([]);
   const userCtx = useContext(UserContext);
-  const [requestBodies, setRequestBodies] = useState([]);
+  // const [requestBodies, setRequestBodies] = useState([]);
+  const fetchData = useFetch();
 
   //Whenever we retrieve data from useGetOura hook (ouraData) assign its value to ouraSleepData
   useEffect(() => {
@@ -18,18 +20,21 @@ const DisplaySleep = () => {
   }, [ouraData]);
 
   //Whenever there are changes to ouraSleepData loop through its content to build the requestBody using the prepareDataForRequest function
-  //calls addEntry so it can be stored in the database
   useEffect(() => {
     if (ouraSleepData.length > 0) {
-      const newRequestBodies = [];
       ouraSleepData.forEach((data) => {
-        const requestBody = prepareDataForRequest(data);
-        newRequestBodies.push(requestBody);
+        const requestBodies = prepareDataForRequest(data);
+        if (requestBodies.length > 0) {
+          // Check if requestBodies is not empty
+          requestBodies.forEach((requestBody) => {
+            addEntry(requestBody);
+          });
+        }
       });
-      setRequestBodies(newRequestBodies);
     }
   }, [ouraSleepData]);
 
+  //parse data from oura response and prepare for insert in database
   const prepareDataForRequest = (jsonData) => {
     // List of attributes to search for in the JSON data
     const attributesToSearch = [
@@ -48,29 +53,38 @@ const DisplaySleep = () => {
       // Check if the attribute exists in the current data object
       if (jsonData.hasOwnProperty(attribute)) {
         const dataValue = jsonData[attribute];
-        // const category_name = attribute.replace(/_/g, " ");
         const category_name = attribute;
         const requestBody = {
           user_id: userCtx.loggedUserId,
           source_name: "oura",
-          data_type: "sleep",
+          entry_type: "sleep",
           category_name,
-          data_timestamp: jsonData.day,
-          data_value: dataValue.toString(),
+          entry_day: jsonData.day,
+          entry_value: dataValue.toString(),
         };
         requestBodies.push(requestBody);
       }
     });
 
-    console.log(requestBodies);
     return requestBodies;
+  };
+
+  //call endpoint to add parsed data (on prepareDataForRequest) to the database
+  const addEntry = async (requestBody) => {
+    // console.log(requestBody);
+    const res = await fetchData("/addEntry", "PUT", requestBody);
+    if (res.ok) {
+      console.log("All data inserted successfuly");
+    } else {
+      console.error("Error inserting data:", res.data);
+    }
   };
 
   return (
     <div>
-      {requestBodies.map((requestBody, index) => (
+      {/* {requestBodies.map((requestBody, index) => (
         <div key={index}>{JSON.stringify(requestBody)}</div>
-      ))}
+      ))} */}
     </div>
   );
 };

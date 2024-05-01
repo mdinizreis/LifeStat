@@ -20,17 +20,12 @@ const DataEntries = sequelize.define(
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    data_timestamp: DataTypes.DATE,
-    data_value: DataTypes.JSONB,
-    data_type: DataTypes.STRING(50),
+    entry_day: DataTypes.DATE,
+    entry_value: DataTypes.NUMERIC, //need to research further on how to use JSONB for this instead
+    entry_type: DataTypes.STRING(50),
   },
   {
     tableName: "data_entries", // Specify the table name
-    hooks: {
-      beforeCreate: (dataEntry, options) => {
-        dataEntry.data_timestamp = new Date(); // Set data_timestamp to current date
-      },
-    },
   }
 );
 

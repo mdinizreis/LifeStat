@@ -1,6 +1,7 @@
 const { DataEntries } = require("../models/DataEntries");
 const { DataSources } = require("../models/DataSources");
 const { DataCategories } = require("../models/DataCategories");
+const { Sequelize } = require("sequelize");
 
 const addEntry = async (req, res) => {
   try {
@@ -35,9 +36,12 @@ const addEntry = async (req, res) => {
         user_id: req.body.user_id,
         source_id: sourceInstance.source_id,
         category_id: categoryInstance.category_id,
-        data_timestamp: req.body.data_timestamp,
-        data_value: req.body.data_value,
-        data_type: req.body.data_type,
+        // Truncate time part for comparison
+        entry_day: {
+          [Sequelize.Op.eq]: Sequelize.fn("DATE", req.body.entry_day),
+        },
+        entry_value: req.body.entry_value,
+        entry_type: req.body.entry_type,
       },
     });
 
@@ -51,9 +55,9 @@ const addEntry = async (req, res) => {
       user_id: req.body.user_id,
       source_id: sourceInstance.source_id,
       category_id: categoryInstance.category_id,
-      data_timestamp: req.body.data_timestamp,
-      data_value: req.body.data_value,
-      data_type: req.body.data_type,
+      entry_day: req.body.entry_day,
+      entry_value: req.body.entry_value,
+      entry_type: req.body.entry_type,
     });
     res.json({ status: "ok", msg: "Data entry created" });
   } catch (error) {
@@ -68,7 +72,7 @@ const bulkAddEntry = async (req, res) => {
     const data = req.body;
 
     // Iterate over each data object in the array
-    for (const entry of data) {
+    data.forEach(async (entry) => {
       const sourceInstance = await DataSources.findOne({
         where: {
           source_name: entry.source_name,
@@ -100,15 +104,18 @@ const bulkAddEntry = async (req, res) => {
           user_id: entry.user_id,
           source_id: sourceInstance.source_id,
           category_id: categoryInstance.category_id,
-          data_timestamp: entry.data_timestamp,
-          data_value: entry.data_value,
-          data_type: entry.data_type,
+          // Truncate time part for comparison
+          entry_day: {
+            [Sequelize.Op.eq]: Sequelize.fn("DATE", entry.entry_day),
+          },
+          entry_value: entry.entry_value,
+          entry_type: entry.entry_type,
         },
       });
 
       if (existingEntry) {
         console.error("Data entry already exists:", entry);
-        continue; // Skip to the next iteration of the loop
+        return; // Skip to the next iteration of the loop
       }
 
       // Create a new entry for each data object
@@ -116,13 +123,16 @@ const bulkAddEntry = async (req, res) => {
         user_id: entry.user_id,
         source_id: sourceInstance.source_id,
         category_id: categoryInstance.category_id,
-        data_timestamp: entry.data_timestamp,
-        data_value: entry.data_value,
-        data_type: entry.data_type,
+        entry_day: entry.entry_day,
+        entry_value: entry.entry_value,
+        entry_type: entry.entry_type,
       });
-    }
+    });
 
-    res.json({ status: "ok", msg: "Bulk data entry created" });
+    res.json({
+      status: "ok",
+      msg: "Bulk data entry created. Duplicates skipped",
+    });
   } catch (error) {
     console.error(error.message);
     res.status(400).json({ status: "error", msg: "Error Entering Data" });

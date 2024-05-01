@@ -52,6 +52,7 @@ BEFORE RUNNING BACKEND SERVER - DATABASE STEPS:
 - grant all on schema public to db_lifestat_user;
 - GRANT CREATE ON DATABASE lifestat TO db_lifestat_user;
 - create extension if not exists "uuid-ossp";
+- Seed Categories and Sources
 
 Generate .env file:
 access token

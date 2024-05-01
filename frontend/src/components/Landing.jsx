@@ -6,26 +6,28 @@ const Landing = () => {
     <Grid>
       <img
         src="/src/assets/lifeStat_Landing.svg"
-        style={{ display: "block", margin: "auto" }}
+        style={{
+          display: "block",
+          margin: "auto",
+          height: "800px",
+          width: "1200px",
+        }}
       ></img>
 
       <Grid container>
         <Grid item xs={12}>
-          <h3>LifeStat</h3>
+          <h3>Know more about your life!</h3>
         </Grid>
         <Grid item xs={12} sm={7} md={8}>
           <Typography variant="body1" className="large">
             Your comprehensive solution for tracking in ONE PLACE various
             aspects of your life, combining manual input with automatic syncing
             from other services so you can access a holistic view of your
-            behaviors and habits.
-            <br />
-            <br />
-            <strong>Relationships in your data?</strong> We will help you find
-            correlations so you can have a deeper understanding on what drive
-            your happiness, activity levels, productivity, and more. Run
-            experiments on your behavior, leveraging LifeStat to confirm or
-            refute your assumptions and uncover meaningful insights.
+            behaviors and habits. We will help you find correlations so you can
+            have a deeper understanding on what drive your happiness, activity
+            levels, productivity, and more. Run experiments on your behavior,
+            leveraging LifeStat to confirm or refute your assumptions and
+            uncover meaningful insights.
           </Typography>
         </Grid>
         <Grid item xs={12} sm={5} md={4}>

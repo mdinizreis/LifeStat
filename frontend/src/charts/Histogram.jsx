@@ -21,6 +21,7 @@ const Histogram = (props) => {
   const getURLData = async () => {
     let urlResponse = await fetch(jsonURL);
     let jsonResult = await urlResponse.json();
+    console.log(jsonResult);
 
     // build a dictionary to record the frequency of each state in the json response
     let stateFreq = {};

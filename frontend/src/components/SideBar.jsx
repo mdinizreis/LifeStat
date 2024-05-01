@@ -26,10 +26,6 @@ const SideBar = () => {
 
   const navigate = useNavigate();
 
-  //   useEffect(() => {
-  //     getCollectionByUserID();
-  //   }, [userCtx.loggedUserId]);
-
   const toggleSidebar = () => {
     setCollapsed(!collapsed);
   };
@@ -39,10 +35,7 @@ const SideBar = () => {
 
     switch (menuItem) {
       case "day":
-        searchParams = {
-          q: "Day",
-          category: "Day",
-        };
+        navigate("/main");
         break;
       case "week":
         searchParams = {
