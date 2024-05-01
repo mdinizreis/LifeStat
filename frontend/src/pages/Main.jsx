@@ -15,10 +15,10 @@ const Main = () => {
         <Landing></Landing>
       ) : (
         <div style={{ display: "flex", flexWrap: "wrap" }}>
-          {/* <DisplaySleep></DisplaySleep> */}
-          <LineChart height={400} width={400} />
-          <TimeSeries width={400} height={300} />
-          <Histogram width={400} height={400} />
+          <DisplaySleep></DisplaySleep>
+          {/* <LineChart height={400} width={400} /> */}
+          {/* <TimeSeries width={400} height={300} /> */}
+          {/* <Histogram width={400} height={400} /> */}
         </div>
       )}
     </>

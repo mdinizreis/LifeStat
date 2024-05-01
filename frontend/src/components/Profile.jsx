@@ -4,7 +4,16 @@
 import React, { useState, useContext, useEffect } from "react";
 import UserContext from "../context/user";
 import useFetch from "../hooks/useFetch";
-import { Typography, Grid, TextField, Button } from "@mui/material";
+import {
+  Typography,
+  Grid,
+  TextField,
+  Button,
+  IconButton,
+  InputAdornment,
+} from "@mui/material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const Profile = () => {
   const userCtx = useContext(UserContext);
@@ -15,6 +24,7 @@ const Profile = () => {
     user_hash: "",
   });
   const [passwordError, setPasswordError] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -78,24 +88,9 @@ const Profile = () => {
     });
   };
 
-  // add new collection to the specific logged-in user
-  //   const addNewCollection = async () => {
-  //     const id = userCtx.loggedUserId;
-  //     const res = await fetchData(
-  //       "/api/" + id,
-  //       "PUT",
-  //       { q: newCollection },
-  //       userCtx.accessToken
-  //     );
-
-  //     if (res.ok) {
-  //       getCollectionByUserID();
-  //       setNewCollection([]);
-  //     } else {
-  //       alert(JSON.stringify(res.data));
-  //       console.log(res.data);
-  //     }
-  //   };
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <div>
@@ -128,9 +123,22 @@ const Profile = () => {
               required
               label="Password"
               name="user_hash"
-              type="password"
+              type={showPassword ? "text" : "password"} // Toggle password visibility
               onChange={handleChange}
               helperText={passwordError ? "Password cannot be empty" : ""}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={togglePasswordVisibility} edge="end">
+                      {showPassword ? (
+                        <VisibilityOffIcon />
+                      ) : (
+                        <VisibilityIcon />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
           </Grid>
           <Grid item xs={12}>

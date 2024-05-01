@@ -12,8 +12,8 @@ const useGetOura = () => {
   async function fetchData() {
     try {
       const url = new URL(import.meta.env.VITE_OURA_API_SLEEP_URL);
-      url.searchParams.append("start_date", "2023-11-01");
-      url.searchParams.append("end_date", "2023-12-01");
+      url.searchParams.append("start_date", "2024-01-04");
+      url.searchParams.append("end_date", "2024-05-04");
       // console.log(url);
 
       // Use a CORS proxy URL to bypass CORS restrictions
@@ -42,6 +42,7 @@ const useGetOura = () => {
       }
     } catch (error) {
       console.log(error.message);
+      console.log(error);
     }
   }
   useEffect(() => {

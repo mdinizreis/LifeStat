@@ -16,26 +16,11 @@
 import React from "react";
 
 const FormatDate = ({ ISOdate }) => {
-  // Calculate the time difference
   const date = new Date(ISOdate);
-  const currentDate = new Date();
-  const timeDifference = currentDate - date;
-
-  // Convert time difference to hours
-  const hoursDifference = Math.floor(timeDifference / (1000 * 60 * 60));
 
   // Format the updatedAt string
   let updatedString = "";
-  //   if (hoursDifference < 1) {
-  //     updatedString = "less than an hour ago";
-  //   } else if (hoursDifference === 1) {
-  //     updatedString = "1h ago";
-  //   } else if (hoursDifference > 1 && hoursDifference < 24) {
-  //     updatedString = `${hoursDifference}h ago`;
-  //   } else if (hoursDifference > 24 && hoursDifference < 240) {
-  //     const daysDifference = Math.floor(hoursDifference / 24);
-  //     updatedString = `${daysDifference} days ago`;
-  //   } else {
+
   if (date) {
     // Format the date in "23 Mar 2024 4:31PM" format like
     const dateFormatOptions = {

@@ -22,7 +22,7 @@ const DataEntries = sequelize.define(
     },
     data_timestamp: DataTypes.DATE,
     data_value: DataTypes.JSONB,
-    analysis_type: DataTypes.STRING(50),
+    data_type: DataTypes.STRING(50),
   },
   {
     tableName: "data_entries", // Specify the table name
@@ -34,8 +34,8 @@ const DataEntries = sequelize.define(
   }
 );
 
-DataEntries.belongsTo(Users); // Define association
-DataEntries.belongsTo(DataSources); // Define association
-DataEntries.belongsTo(DataCategories); // Define association
+DataEntries.belongsTo(Users, { foreignKey: "user_id" }); // Define association
+DataEntries.belongsTo(DataSources, { foreignKey: "source_id" }); // Define association
+DataEntries.belongsTo(DataCategories, { foreignKey: "category_id" }); // Define association
 
 module.exports = { DataEntries };

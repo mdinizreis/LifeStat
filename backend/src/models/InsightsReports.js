@@ -33,6 +33,6 @@ const InsightsReports = sequelize.define(
   }
 );
 
-InsightsReports.belongsTo(Users); // Define association
+InsightsReports.belongsTo(Users, { foreignKey: "user_id" }); // Define association
 
 module.exports = { InsightsReports };
