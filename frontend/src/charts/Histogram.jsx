@@ -1,90 +1,79 @@
 import * as d3 from "d3";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import useFetch from "../hooks/useFetch";
+import { timeFormat } from "d3"; // Import time format function from d3
 
 const Histogram = (props) => {
   const { width, height } = props;
-
-  let jsonURL = "https://api.openbrewerydb.org/breweries";
-
+  const svgRef = useRef();
+  const fetchData = useFetch(); // Use the useFetch hook
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true); // State to track loading status
+
+  useEffect(() => {
+    // Fetch data from the backend
+    fetchData("/getTotalSleepDuration", "GET").then((response) => {
+      if (response.ok) {
+        setData(response.data.data); // Set the retrieved data
+        setLoading(false); // Set loading to false when data is fetched
+        drawChart();
+      } else {
+        console.error("Error fetching data:", response.data);
+        setLoading(false); // Set loading to false in case of error
+      }
+    });
+  }, []);
 
   useEffect(() => {
     if (data.length > 0) {
       drawChart();
-    } else {
-      getURLData();
     }
   }, [data]);
 
-  // fetchs json and converts to an array from a random API I found
-  // ex. [{state: 'Idaho', frequency: 1}]
-  const getURLData = async () => {
-    let urlResponse = await fetch(jsonURL);
-    let jsonResult = await urlResponse.json();
-    console.log(jsonResult);
-
-    // build a dictionary to record the frequency of each state in the json response
-    let stateFreq = {};
-    jsonResult.forEach((element) => {
-      if (stateFreq[element.state] > 0) {
-        stateFreq[element.state] = stateFreq[element.state] + 1;
-      } else {
-        stateFreq[element.state] = 1;
-      }
-    });
-
-    // convert the dictionary to an array
-    let stateFreqArray = Object.keys(stateFreq).map(function (key) {
-      return { state: key, frequency: stateFreq[key] };
-    });
-
-    // sort the array by frequency and send it to the data variable
-    setData(
-      stateFreqArray.sort(function (a, b) {
-        return b.frequency - a.frequency;
-      })
-    );
-  };
-
   const drawChart = () => {
+    // Clear previous chart
+    d3.select(svgRef.current).selectAll("*").remove();
+
+    // Customize time format for x-axis labels
+    const dateFormatter = timeFormat("%a %b %d");
+
     // declare margins
     const margin = { top: 70, right: 50, bottom: 70, left: 50 };
+    const innerWidth = width - margin.left - margin.right;
+    const innerHeight = height - margin.top - margin.bottom;
 
     // create the svg that holds the chart
+    console.log(svgRef.current);
     const svg = d3
-      .select("#histogram")
+      .select(svgRef.current)
       .append("svg")
       .style("background-color", "white")
       .attr("width", width)
       .attr("height", height)
       .append("g")
-      .attr("transform", `translate(0,-${margin.bottom - 10})`);
+      .attr("transform", `translate(${margin.left},${margin.top})`);
 
-    // create the x axis scale, scaled to the states
+    // create X axis scale
     const xScale = d3
       .scaleBand()
-      .domain(data.map((d) => d.state))
-      .rangeRound([margin.left, width - margin.right])
+      .domain(data.map((d) => new Date(d.entry_day)))
+      .range([0, innerWidth])
       .padding(0.1);
 
-    // create the y axis scale, scaled from 0 to the max
+    // create the y axis scale
     const yScale = d3
       .scaleLinear()
-      .domain([0, d3.max(data, (d) => d.frequency)])
-      .range([height - margin.bottom, margin.top]);
-
-    // create a scale between colors that varies by the frequency
-    const barColors = d3
-      .scaleLinear()
-      .domain([0, d3.max(data, (d) => d.frequency)])
-      .range(["blue", "red"]);
+      // .domain([0, d3.max(data, (d) => d.total_sleep_duration)])
+      .domain([0, 28000])
+      .range([innerHeight, 0]);
 
     // set the x axis on the bottom.
     // tilts the axis text so it's readable and not smushed.
     svg
       .append("g")
-      .attr("transform", `translate(0,${height - margin.bottom})`)
-      .call(d3.axisBottom(xScale))
+      .attr("transform", `translate(0,${innerHeight})`)
+      // .call(d3.axisBottom(xScale))
+      .call(d3.axisBottom(xScale).tickFormat(dateFormatter))
       .selectAll("text")
       .style("text-anchor", "end")
       .attr("dx", "-.8em")
@@ -92,39 +81,54 @@ const Histogram = (props) => {
       .attr("transform", "rotate(-65)");
 
     // set the y axis on the left
+    svg.append("g").call(d3.axisLeft(yScale));
+
+    // Add a horizontal red dotted line at y-axis value of 25200 (7h of Sleep)
     svg
-      .append("g")
-      .attr("transform", `translate(${margin.left},0)`)
-      .call(d3.axisLeft(yScale));
+      .append("line")
+      .attr("x1", 0)
+      .attr("y1", yScale(25200))
+      .attr("x2", innerWidth)
+      .attr("y2", yScale(25200))
+      .attr("stroke", "red")
+      .attr("stroke-width", 1)
+      .attr("stroke-dasharray", "4"); // Make the line dotted
 
     // create the actual bars on the graph, appends a 'rect' for every data element
     // sets the x and y positions relative to the scales already established
     // sets the height according to the yscale
     // static bar width, color is scaled on the y axis
     // finally the bars have an outline
-    const bars = svg
+    svg
       .selectAll("rect")
       .data(data)
       .enter()
       .append("rect")
-      .attr("x", (d) => xScale(d.state))
-      .attr("y", (d) => yScale(d.frequency))
+      .attr("x", (d) => xScale(new Date(d.entry_day)))
+      .attr("y", (d) => yScale(d.total_sleep_duration))
       .attr("width", xScale.bandwidth())
-      .attr("height", (d) => yScale(0) - yScale(d.frequency))
-      .style("padding", "3px")
-      .style("margin", "1px")
-      .style("width", (d) => `${d * 10}px`)
-      .attr("fill", function (d) {
-        return barColors(d.frequency);
-      })
+      .attr("height", (d) => innerHeight - yScale(d.total_sleep_duration))
+      .attr("fill", "blue")
       .attr("stroke", "black")
       .attr("stroke-width", 1);
+
+    // Display value within each bar
+    svg
+      .selectAll(".bar-label")
+      .data(data)
+      .enter()
+      .append("text")
+      .attr("class", "bar-label")
+      .attr("x", (d) => xScale(new Date(d.entry_day)) + xScale.bandwidth() / 2)
+      .attr("y", (d) => yScale(d.total_sleep_duration) - 5) // Adjust position
+      .attr("text-anchor", "middle")
+      .text((d) => d.total_sleep_duration);
   };
 
   return (
     <div>
-      <h4> Histogram- http JSON response </h4>
-      <div id="histogram" />
+      <h4> Histogram - Total Sleep Duration </h4>
+      {loading ? <p>Loading...</p> : <div id="histogram" ref={svgRef} />}
     </div>
   );
 };

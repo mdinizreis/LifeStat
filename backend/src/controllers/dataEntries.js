@@ -138,5 +138,59 @@ const bulkAddEntry = async (req, res) => {
     res.status(400).json({ status: "error", msg: "Error Entering Data" });
   }
 };
+// Sequelize version of the query to extract the total_sleep_duration per day, in seconds
+/* SELECT
+    DE.entry_day,
+ -- DC.category_name,
+    SUM(DE.entry_value) AS total_sleep_duration
+FROM
+    data_entries DE
+JOIN
+    data_categories DC ON DE.category_id = DC.category_id
+WHERE
+    DC.category_name = 'total_sleep_duration'
+GROUP BY
+    DE.entry_day,
+    DC.category_name;
+*/
+const getTotalSleepDuration = async (req, res) => {
+  try {
+    const totalSleepDuration = await DataEntries.findAll({
+      attributes: [
+        [Sequelize.fn("DATE", Sequelize.col("entry_day")), "entry_day"],
+        [
+          Sequelize.fn("SUM", Sequelize.col("entry_value")),
+          "total_sleep_duration",
+        ],
+      ],
+      include: [
+        {
+          model: DataCategories,
+          where: { category_name: "total_sleep_duration" },
+        },
+      ],
+      group: [
+        "entry_day",
+        "data_category.category_id",
+        "data_category.category_name",
+      ],
+      raw: true, // to return raw JSON objects instead of objects nested in data_categories
+    });
 
-module.exports = { addEntry, bulkAddEntry };
+    // Transform the data to remove the "data_category" object
+    const transformedData = totalSleepDuration.map((entry) => ({
+      entry_day: entry.entry_day,
+      total_sleep_duration: entry.total_sleep_duration,
+      category_name: entry["data_category.category_name"],
+    }));
+
+    return res.status(200).json({ status: "success", data: transformedData });
+  } catch (error) {
+    console.error(error.message);
+    res
+      .status(400)
+      .json({ status: "error", msg: "Error retrieving total sleep duration" });
+  }
+};
+
+module.exports = { addEntry, bulkAddEntry, getTotalSleepDuration };
