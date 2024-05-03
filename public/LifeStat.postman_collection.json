@@ -1,0 +1,371 @@
+{
+	"info": {
+		"_postman_id": "3cb77f2f-7485-4208-966b-b68f6b95a526",
+		"name": "LifeStat",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33415789"
+	},
+	"item": [
+		{
+			"name": "Registration / Login",
+			"item": [
+				{
+					"name": "{{server}}/allUsers/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/allUsers/",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"allUsers",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{server}}/seedUsers/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/seedUsers/",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"seedUsers",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{server}}/register/",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_username\": \"username1\",\n    \"user_email\": \"user@name.com\",\n    \"user_hash\": \"password\",\n    \"user_role\": \"admin\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/register/",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"register",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{server}}/login/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_email\":\"user1@email.com\",\n    \"user_hash\":\"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/login/",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{server}}/refresh/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"refresh\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM3NTBkMzhhLTJkYmItNDgxZS1iY2E4LWY5MjNlYmY2ZDU3NyIsImVtYWlsIjoidXNlcjFAZW1haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzE0MzcwMjk3LCJleHAiOjE3MTY5NjIyOTcsImp0aSI6ImJhYWNhZTc1LWQzYmItNDAwYy05MzgzLWE5ODFiZmM4YzJmMCJ9.FmqSoPIheOIYyJupT1-V3R7hpZB0IMx-0yAlhq3NHGY\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/refresh/",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"refresh",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{server}}/update/:user_id/",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_username\": \"username1\",\n    \"user_email\": \"user@name.com\",\n    \"user_hash\": \"passwordCHANGED\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/update/:user_id/",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"update",
+								":user_id",
+								""
+							],
+							"variable": [
+								{
+									"key": "user_id",
+									"value": "c750d38a-2dbb-481e-bca8-f923ebf6d577"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{server}}/users/:user_id/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/users/:user_id/",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"users",
+								":user_id",
+								""
+							],
+							"variable": [
+								{
+									"key": "user_id",
+									"value": "c750d38a-2dbb-481e-bca8-f923ebf6d577"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{server}}/delete/:user_id/",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/delete/:user_id/",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"delete",
+								":user_id",
+								""
+							],
+							"variable": [
+								{
+									"key": "user_id",
+									"value": "eb036021-7920-401b-809b-f4ab0432393e"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{access_token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Data Categories",
+			"item": [
+				{
+					"name": "{{server}}/seedCategories/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/seedCategories/",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"seedCategories",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Data Sources",
+			"item": [
+				{
+					"name": "{{server}}/seedSources/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/seedSources/",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"seedSources",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Data Entry",
+			"item": [
+				{
+					"name": "{{server}}/addEntry/",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": \"c750d38a-2dbb-481e-bca8-f923ebf6d577\",\n    \"source_name\": \"oura\",\n    \"category_name\": \"deep_sleep_duration\",\n    \"data_timestamp\": \"2024-03-17\",\n    \"data_value\": \"6420\",\n    \"data_type\": \"sleep\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/addEntry/",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"addEntry",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{server}}/bulkAddEntry/",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"user_id\": \"c750d38a-2dbb-481e-bca8-f923ebf6d577\",\n        \"source_name\": \"oura\",\n        \"entry_type\": \"sleep\",\n        \"category_name\": \"average_heart_rate\",\n        \"entry_day\": \"2024-01-05\",\n        \"entry_value\": \"58.125\"\n    },\n    {\n        \"user_id\": \"c750d38a-2dbb-481e-bca8-f923ebf6d577\",\n        \"source_name\": \"oura\",\n        \"entry_type\": \"sleep\",\n        \"category_name\": \"deep_sleep_duration\",\n        \"entry_day\": \"2024-01-05\",\n        \"entry_value\": \"7560\"\n    },\n    {\n        \"user_id\": \"c750d38a-2dbb-481e-bca8-f923ebf6d577\",\n        \"source_name\": \"oura\",\n        \"entry_type\": \"sleep\",\n        \"category_name\": \"light_sleep_duration\",\n        \"entry_day\": \"2024-01-05\",\n        \"entry_value\": \"12600\"\n    },\n    {\n        \"user_id\": \"c750d38a-2dbb-481e-bca8-f923ebf6d577\",\n        \"source_name\": \"oura\",\n        \"entry_type\": \"sleep\",\n        \"category_name\": \"rem_sleep_duration\",\n        \"entry_day\": \"2024-01-05\",\n        \"entry_value\": \"5670\"\n    },\n    {\n        \"user_id\": \"c750d38a-2dbb-481e-bca8-f923ebf6d577\",\n        \"source_name\": \"oura\",\n        \"entry_type\": \"sleep\",\n        \"category_name\": \"time_in_bed\",\n        \"entry_day\": \"2024-01-05\",\n        \"entry_value\": \"28560\"\n    },\n    {\n        \"user_id\": \"c750d38a-2dbb-481e-bca8-f923ebf6d577\",\n        \"source_name\": \"oura\",\n        \"entry_type\": \"sleep\",\n        \"category_name\": \"total_sleep_duration\",\n        \"entry_day\": \"2024-01-05\",\n        \"entry_value\": \"25830\"\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/bulkAddEntry/",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"bulkAddEntry",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{server}}/getTotalSleepDuration/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/getTotalSleepDuration/",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"getTotalSleepDuration",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
