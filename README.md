@@ -147,6 +147,8 @@ Custom React hook useGetOura is responsible for fetching sleep data (for now, ac
 
 The Models components use Sequelize ORM (Object-Relational Mapping) to create and manage data entries within a PostgreSQL database. e.g. DataEntries.js defines the DataEntries model with columns for entry_id, entry_day, entry_value, and entry_type, specifying their respective data types. Associations with the Users, DataSources, and DataCategories models are established to represent relationships between data entries and users, data sources, and data categories. Finally, the DataEntries model is exported for use in other parts of the application.
 
+![LifeStat ERD](/public/LifeStat_ERD.png)
+
 Controller components implements several functionalities for managing and analyzing data entries in the database.
 
 - e.g. (1) dataEntries.js addEntry function handles the creation of a single data entry, checking for existing entries and inserting the new entry if it doesn't already exist. The bulkAddEntry function allows for the creation of multiple data entries at once, skipping duplicates. Additionally, the getTotalSleepDuration function queries the database to calculate the total sleep duration per day and returns the results, transforming the data to a more readable format before sending it as a response.
