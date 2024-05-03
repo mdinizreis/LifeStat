@@ -138,6 +138,7 @@ const bulkAddEntry = async (req, res) => {
     res.status(400).json({ status: "error", msg: "Error Entering Data" });
   }
 };
+
 // Sequelize version of the query to extract the total_sleep_duration per day, in seconds
 /* SELECT
     DE.entry_day,

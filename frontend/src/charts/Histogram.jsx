@@ -43,7 +43,7 @@ const Histogram = (props) => {
     const innerHeight = height - margin.top - margin.bottom;
 
     // create the svg that holds the chart
-    console.log(svgRef.current);
+    // console.log(svgRef.current);
     const svg = d3
       .select(svgRef.current)
       .append("svg")

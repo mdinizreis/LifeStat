@@ -18,7 +18,7 @@ const Main = () => {
           <DisplaySleep></DisplaySleep>
           {/* <LineChart height={400} width={400} /> */}
           {/* <TimeSeries width={400} height={300} /> */}
-          <Histogram width={800} height={800} />
+          <Histogram width={700} height={700} />
         </div>
       )}
     </>
